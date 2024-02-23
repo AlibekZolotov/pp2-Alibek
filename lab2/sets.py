@@ -15,3 +15,4 @@ fruits.remove("banana")
 #ex5
 fruits = {"apple", "banana", "cherry"}
 fruits.discard("banana")
+
