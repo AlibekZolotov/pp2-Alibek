@@ -1,101 +1,112 @@
 #ex1
 import re
 
-def match_pattern(input_string):
-    pattern = re.compile(r'a*b*')
-    match = pattern.fullmatch(input_string)
-    return bool(match)
+b_str = 'hydfdasd'
 
-def main():
-    try:
-        input_string = input("Enter a string: ")
-        result = match_pattern(input_string)
-
-        if result:
-            print("The string matches the pattern.")
-        else:
-            print("The string does not match the pattern.")
-
-    except Exception as e:
-        print(f"An error occurred: {e}")
-
-if __name__ == "__main__":
-    main()
+x = re.search("ab*", b_str)
+if x:
+    print("Matched -", x.group())
+else:
+    print("Didn't match")
 #ex2
 import re
 
-def match_pattern(input_string):
-    pattern = re.compile(r'ab{2,3}')
-    match = pattern.fullmatch(input_string)
-    return bool(match)
+q_str = 'clfslmfdss'
 
-def main():
-    try:
-        input_string = input("Enter a string: ")
-
-        result = match_pattern(input_string)
-        
-        if result:
-            print("The input string matches the pattern.")
-        else:
-            print("The input string does not match the pattern.")
-
-    except Exception as e:
-        print(f"An error occurred: {e}")
-
-if __name__ == "__main__":
-    main()
-
+x = re.search(r"ab{2,3}", q_str)
+if x:
+    print("Matched -", x.group())
+else:
+    print("Didn't match")
 #ex3
 import re
-
-def find_sequences(input_string):
-    pattern = re.compile(r'[A-Z][a-z]+')
-    matches = pattern.findall(input_string)
-    return matches
-
-def main():
-    try:
-        input_string = input("Enter a string: ")
-
-        sequences = find_sequences(input_string)
-
-        if sequences:
-            print("Sequences found:")
-            for seq in sequences:
-                print(seq)
-        else:
-            print("No sequences found in the input string.")
-
-    except Exception as e:
-        print(f"An error occurred: {e}")
-
-if __name__ == "__main__":
-    main()
-
+k_str = 'berik_alibek74_add'
+x = re.findall("[a-z]+_[a-z]+", k_str)
+if x:
+    print("Matched, sequences:", x)
+else:
+    print("Didn't match")
 #ex4
 import re
+z_str = "dsBerik.;sAlibek4df"
+x = re.findall("[A-Z][a-z]+", z_str)
+if x:
+    print("Sequences:", x)
+else:
+    print("Didn't match")
+#ex5
+import re
+t_str = 'benfkofdsb'
+x = re.search("a.*b$", t_str)
+if x:
+    print("Sequences:", x.group())
+else:
+    print("Didn't match")
+#ex6
+import re
 
-def find_sequences(input_string):
-    pattern = re.compile(r'[A-Z][a-z]+')
-    matches = pattern.findall(input_string)
-    return matches
+def test(pattern, text, testnum, result):
+    res = re.sub(pattern, ':', text)
+    print(res)
+    if res == result:
+        print(f'Test {testnum} passed!')
+    else:
+        print(f'Test {testnum} didn\'t pass')
 
-def main():
-    try:
-        input_string = input("Enter a string: ")
+pattern = r'[\s,.]'
+test(pattern, 'my surname, dfl.,3', 1, 'my:surname::dfl::3')
+#ex7
+import re
 
-        sequences = find_sequences(input_string)
+def test(pattern, text, testnum, result):
+    res = re.sub(pattern, lambda a: a.group('ch').upper(), text)
+    print(res)
+    if res == result:
+        print(f'Test {testnum} passed!')
+    else:
+        print(f'Test {testnum} didn\'t pass')
 
-        if sequences:
-            print("Sequences found:")
-            for seq in sequences:
-                print(seq)
-        else:
-            print("No sequences found in the input string.")
+pattern = r'_(?P<ch>.)'
+test(pattern, 'b_int_fdatf f_Ve_Vh_roz', 1, 'bIntFdAtf fVeVhRoz')
+#ex8
+import re
 
-    except Exception as e:
-        print(f"An error occurred: {e}")
+def test(pattern, text, testnum, result):
+    res = re.split(pattern, text)
+    print(res)
+    if res == result:
+        print(f'Test {testnum} passed!')
+    else:
+        print(f'Test {testnum} didn\'t pass')
 
-if __name__ == "__main__":
-    main()
+pattern = '[A-Z]'
+test(pattern, 'iamAlibekDDsoCmy:G9qwXex', 1, ['i', 'am', 'alibek', '', 'so', 'my:', '5th', 'ex'])
+#ex9
+import re
+
+def test(pattern, text, testnum, result):
+    res = re.sub(pattern, r'\1 \2', text)
+    print(res)
+    if res == result:
+        print(f'Test {testnum} passed!')
+    else:
+        print(f'Test {testnum} didn\'t pass')
+
+pattern = r'(?P<low>\w)(?P<upp>[A-Z])'
+test(pattern, "MyMegaText", 1, "My Mega Text")
+test(pattern, " MyMegaText IAmMachine", 2, " My Mega Text I Am Machine")
+#ex10
+import re
+
+def test(pattern, func, text, testnum, result):
+    res = re.sub(pattern, func, text)
+    print(res)
+    if res == result:
+        print(f'Test {testnum} passed!')
+    else:
+        print(f'Test {testnum} didn\'t pass')
+
+pattern = r'.[A-Z]'
+change_to = lambda a: f'{a.group().lower()[0]}_{a.group().lower()[1]}'
+test(pattern, change_to, 'Facebook, Android and Ozon ', 1, 'Face_book, A_ndroid and O_zon')
+
